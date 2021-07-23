@@ -1,0 +1,11 @@
+{
+    "users" : [
+        {
+            "id": 1,
+            "name": "user1",
+            "level": 1,
+            "exp": 100,
+            "clover": 10
+        }
+    ]
+}
