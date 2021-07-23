@@ -58,3 +58,36 @@ func getUserData() (map[string]models.User, error) {
 
 	return users.MakeUserMap(), nil
 }
+
+func EditUserName(c *gin.Context) {
+	req := &models.EditUserName{}
+	err := c.Bind(req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	fmt.Println(req)
+
+	usersMap, err := getUserData()
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	user, ok := usersMap[req.OriginName]
+	if !ok {
+		c.JSON(http.StatusOK, gin.H{
+			"ok":  "false",
+			"msg": "not found user",
+		})
+		return
+	}
+
+	user.Name = req.EditName
+	// TODO json 수정부분 추가
+	c.JSON(http.StatusOK, gin.H{
+		"ok":   "true",
+		"user": user,
+	})
+}

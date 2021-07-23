@@ -1,3 +1,8 @@
+.container {
+    height: 100%;
+    display: grid;
+}
+
 .search-section {
     padding-top: 60px;
 }
@@ -29,4 +34,119 @@
     width: 50px; 
     height: 30px;
     color: #fff;
+}
+
+.result-section {
+    background-color: #fff;
+    margin-top: 40px; 
+}
+
+.profile-section {
+    height: 134px;
+    padding: 24px 0;
+}
+
+.user-profile {
+    height: 100%;
+    background-color: #3a3a3a;
+    padding: 24px 34px;
+    color: #fff;
+}
+
+.user-name {
+    font-size: 24px;
+    margin-right: 8px;    
+    vertical-align: middle;
+}
+ 
+.name-edit > svg {
+    width: 26px;
+    height: 26px;
+}
+
+.edit-input {
+    border: none;
+    border-radius: 0.2rem;
+    padding: 8px 10px;
+    font-size: 16px;
+}
+
+.edit-button {
+    padding: 0 20px;
+    font-size: 16px;
+    margin-left: 1%;
+    border: none;
+    height: 40px;
+    background-color: #dd8700;
+    color: #fff;
+    border-radius: 0.2rem;
+}
+
+.info-section {
+    display: flex;
+    padding: 0 0 24px 0;
+    margin-left: -12px;
+}
+
+.user-stats {
+    width: 50%;
+    border: 1px solid black;
+    float: left;
+    margin-left: 12px
+}
+
+.stats-title {
+    background-color: #3a3a3a;
+    width: 100%;
+    color: #fff;
+    padding: 9px 12px;
+    vertical-align: baseline;
+    margin: 0;
+}
+
+.stats-title > h5 {
+    margin: 0;
+}
+
+.stats-contents {
+    padding: 15px 20px;
+}
+
+.one-stat {
+    margin-bottom: 10px;
+    padding: 0 10px;
+    width: 50%;
+    float: left;
+}
+
+.one-stat > .stat-icon {
+    width: 8%;
+    display: inline-block;
+}
+
+.one-stat > label {
+    width: 22%;
+}
+
+.one-stat > input {
+    width: 70%;
+    height: 33px;
+    border: 1px solid #e8e8e8;
+    border-radius: 0.2rem;
+    padding: 0 10px;
+}
+
+.stat-modify {
+    text-align: right;
+    padding-right: 10px;
+}
+ 
+.stat-modify > button {
+    width: 19%;
+    margin-left: 1%;
+    border: none;
+    height: 33px;
+    background-color: #dd8700;
+    color: #fff;
+    border-radius: 0.2rem;
 }

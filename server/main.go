@@ -15,6 +15,7 @@ func main() {
 	user := router.Group("/user")
 	{
 		user.POST("/search", controllers.SearchUser)
+		user.POST("/editName", controllers.EditUserName)
 	}
 	router.Run()
 }

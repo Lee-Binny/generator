@@ -12,7 +12,10 @@ const SearchBar = ({setUser}) => {
         axios.post('/user/search', {
             name: userName
         }).then((res) => {
-            console.log(res)
+            if (res.data.ok === 'true') {
+                console.log(res.data.user)
+                setUser(res.data.user)
+            }
         }).catch((err) => {
             console.log(err)
         });
