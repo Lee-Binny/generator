@@ -1,1 +1,1 @@
-# generator
+# go-admin
