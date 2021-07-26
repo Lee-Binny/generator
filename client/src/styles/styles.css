@@ -10,7 +10,7 @@
 .search-bar {
     width: 624px;
     margin: 0 auto;
-    padding: 10px 70px 10px 20px;
+    padding: 10px 80px 10px 20px;
     border-radius: 2px;
     background-color: #fff;
     -webkit-box-shadow: 0 2px 2px 0 rgb(0 0 0 / 19%);
@@ -28,12 +28,20 @@
 
 .search-bar > button {
     position: absolute;
-    background-color: #000;
     border: none;
     border-radius: 0.2rem;
-    width: 50px; 
+    width: 30px; 
     height: 30px;
     color: #fff;
+}
+
+.search-bar > .search-button {
+    background-color: rgb(94, 197, 245);
+}
+
+.search-bar > .create-button {
+    background-color: rgb(200, 108, 108);
+    margin-left: 35px;
 }
 
 .result-section {

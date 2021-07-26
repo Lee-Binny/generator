@@ -8,14 +8,17 @@ import (
 )
 
 func main() {
+
 	router := gin.Default()
 
 	router.Use(static.Serve("/", static.LocalFile("../client/build", true)))
 
+	userRepo := controllers.NewUserRepo()
 	user := router.Group("/user")
 	{
-		user.POST("/search", controllers.SearchUser)
-		user.POST("/editName", controllers.EditUserName)
+		user.POST("/create", userRepo.CreateUser)
+		user.POST("/search", userRepo.SearchUser)
+		user.POST("/editName", userRepo.EditUserName)
 	}
 	router.Run()
 }

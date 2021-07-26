@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import '../styles/styles.css';
 import axios from 'axios';
+import UserCreateModal from './user/UserCreateModal'
 
-const SearchBar = ({setUser}) => {
+const SearchBar = ({setUser, setMessage, setShow}) => {
     const [userName, setUserName] = useState('')
+    const [showModal, setShowModal] = useState(false)
     const onChange = (e) => {
         setUserName(e.target.value)
     }
@@ -13,13 +15,22 @@ const SearchBar = ({setUser}) => {
             name: userName
         }).then((res) => {
             if (res.data.ok === 'true') {
-                console.log(res.data.user)
                 setUser(res.data.user)
+                setMessage('')
+            } else {
+                setUser(undefined)
+                setMessage(res.data.message)
+                setShow(true)
             }
         }).catch((err) => {
-            console.log(err)
+            setMessage(err)
         });
     }
+
+    const onCreate = () => {
+        setShowModal(true)
+    }
+
     return (
         <div className="search-bar">
             <input 
@@ -28,7 +39,14 @@ const SearchBar = ({setUser}) => {
                 value={userName}
                 onChange={onChange}
             />
-            <button onClick={onClick}>검색</button>
+            <button className="search-button" onClick={onClick}>⌕</button>
+            <button className="create-button" onClick={onCreate}>+</button>
+            <UserCreateModal 
+                show={showModal} 
+                setShow={setShow}
+                setMessage={setMessage} 
+                onHide={() => setShowModal(false)}
+            />
         </div>
     )
 }
