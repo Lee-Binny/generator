@@ -1,11 +1,8 @@
 package controllers
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
-	"os"
 	"server/db"
 	"server/models"
 
@@ -53,6 +50,14 @@ func (repo *UserRepo) SearchUser(c *gin.Context) {
 	}
 
 	user, err := models.FindUser(repo.DB, req.Name)
+	if err == gorm.ErrRecordNotFound {
+		c.JSON(http.StatusOK, gin.H{
+			"ok":      "false",
+			"message": "not found user",
+		})
+		return
+	}
+
 	if err != nil {
 		fmt.Println(err)
 		c.JSON(http.StatusBadRequest, err.Error())
@@ -65,25 +70,6 @@ func (repo *UserRepo) SearchUser(c *gin.Context) {
 	})
 }
 
-func getUserData() (*models.User, error) {
-	jsonFile, err := os.Open("user_data.json")
-	if err != nil {
-		fmt.Println(err)
-		return nil, err
-	}
-
-	byteValue, _ := ioutil.ReadAll(jsonFile)
-
-	user := &models.User{}
-	err = json.Unmarshal(byteValue, user)
-	if err != nil {
-		fmt.Println(err)
-		return nil, err
-	}
-
-	return user, nil
-}
-
 func (repo *UserRepo) EditUserName(c *gin.Context) {
 	req := &models.EditUserName{}
 	err := c.Bind(req)
@@ -92,27 +78,29 @@ func (repo *UserRepo) EditUserName(c *gin.Context) {
 		return
 	}
 
-	fmt.Println(req)
+	user, err := models.FindUser(repo.DB, req.OriginName)
+	if err == gorm.ErrRecordNotFound {
+		c.JSON(http.StatusOK, gin.H{
+			"ok":      "false",
+			"message": "not found user",
+		})
+		return
+	}
 
-	user, err := getUserData()
 	if err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	err = models.UpdateUserName(repo.DB, user, req.EditName)
+	if err != nil {
+		fmt.Println(err)
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
 	}
 
 	user.SetUserName(req.EditName)
-	byteValue, err := json.Marshal(user)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
-		return
-	}
-
-	err = ioutil.WriteFile("user_data.json", byteValue, 0644)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
-		return
-	}
-
 	c.JSON(http.StatusOK, gin.H{
 		"ok":   "true",
 		"user": user,

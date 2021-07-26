@@ -60,6 +60,10 @@ func FindUser(db *gorm.DB, name string) (*User, error) {
 	return &user, nil
 }
 
+func UpdateUserName(db *gorm.DB, user *User, userName string) error {
+	return db.Model(User{}).Where("id = ?", user.Id).Updates(User{Name: userName}).Error
+}
+
 func DeleteUser(db *gorm.DB, id int64) error {
 	return db.Where("id = ?", id).Delete(&User{}).Error
 }
