@@ -24,3 +24,6 @@ go run .
 
 http://localhost:8080/
 
+### Search User
+![findUser](https://user-images.githubusercontent.com/25112694/127178883-2942070b-a43b-489a-8ec8-fec4ad99255b.gif)
+![findNotfoundUser](https://user-images.githubusercontent.com/25112694/127178875-c8cdc3f6-83df-4749-bee8-79b24b2c63c7.gif)
