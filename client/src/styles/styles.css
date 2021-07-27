@@ -57,7 +57,7 @@
 .user-profile {
     height: 100%;
     background-color: #3a3a3a;
-    padding: 24px 34px;
+    padding: 26px 34px;
     color: #fff;
 }
 
@@ -70,6 +70,16 @@
 .name-edit > svg {
     width: 26px;
     height: 26px;
+}
+
+.delete-button {
+    float: right;
+    background-color: #e68383;
+    color: #fff;
+    border: none;
+    border-radius: 0.2rem;
+    height: 33px;
+    padding: 0 10px;
 }
 
 .edit-input {

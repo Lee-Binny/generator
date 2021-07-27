@@ -21,7 +21,7 @@ const Main = () => {
                 <Modal show={show} message={message} onHide={onHide}/>
             )}
             {user && (
-                <Result user={user}/>
+                <Result user={user} setUser={SetUser}/>
             )}
         </div>
     )

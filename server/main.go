@@ -18,7 +18,10 @@ func main() {
 	{
 		user.POST("/create", userRepo.CreateUser)
 		user.POST("/search", userRepo.SearchUser)
-		user.POST("/editName", userRepo.EditUserName)
+		user.POST("/update/name", userRepo.EditUserName)
+		user.POST("/update/stat", userRepo.UpdateStat)
+		user.POST("/update/property", userRepo.UpdateProperty)
+		user.POST("/delete", userRepo.DeleteUser)
 	}
 	router.Run()
 }

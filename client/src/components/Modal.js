@@ -5,7 +5,6 @@ const Main = (props) => {
     return (
         <Modal
             show={props.show}
-            size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
             >

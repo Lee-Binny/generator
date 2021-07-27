@@ -61,7 +61,18 @@ func FindUser(db *gorm.DB, name string) (*User, error) {
 }
 
 func UpdateUserName(db *gorm.DB, user *User, userName string) error {
-	return db.Model(User{}).Where("id = ?", user.Id).Updates(User{Name: userName}).Error
+	return db.Model(User{}).Where("id = ?", user.Id).
+		Updates(map[string]interface{}{"name": userName}).Error
+}
+
+func UpdateStat(db *gorm.DB, userId int64, req *UserStat) error {
+	return db.Model(User{}).Where("id = ?", userId).
+		Updates(map[string]interface{}{"hp": req.Hp, "mp": req.Mp, "atk": req.Atk, "def": req.Def}).Error
+}
+
+func UpdateProperty(db *gorm.DB, userId int64, req *UserProperty) error {
+	return db.Model(User{}).Where("id = ?", userId).
+		Updates(map[string]interface{}{"dia": req.Dia, "coin": req.Coin, "clover": req.Clover, "key": req.Key}).Error
 }
 
 func DeleteUser(db *gorm.DB, id int64) error {

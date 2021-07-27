@@ -21,7 +21,7 @@ func NewUserRepo() *UserRepo {
 }
 
 func (repo *UserRepo) CreateUser(c *gin.Context) {
-	req := &models.SearchName{}
+	req := &models.ReqSearchName{}
 	err := c.Bind(req)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
@@ -42,7 +42,7 @@ func (repo *UserRepo) CreateUser(c *gin.Context) {
 }
 
 func (repo *UserRepo) SearchUser(c *gin.Context) {
-	req := &models.SearchName{}
+	req := &models.ReqSearchName{}
 	err := c.Bind(req)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
@@ -71,7 +71,7 @@ func (repo *UserRepo) SearchUser(c *gin.Context) {
 }
 
 func (repo *UserRepo) EditUserName(c *gin.Context) {
-	req := &models.EditUserName{}
+	req := &models.ReqEditUserName{}
 	err := c.Bind(req)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
@@ -104,5 +104,113 @@ func (repo *UserRepo) EditUserName(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"ok":   "true",
 		"user": user,
+	})
+}
+
+func (repo *UserRepo) UpdateStat(c *gin.Context) {
+	req := &models.ReqUpdateStat{}
+	err := c.Bind(req)
+	if err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	user, err := models.FindUser(repo.DB, req.Name)
+	if err == gorm.ErrRecordNotFound {
+		c.JSON(http.StatusOK, gin.H{
+			"ok":      "false",
+			"message": "not found user",
+		})
+		return
+	}
+
+	if err != nil {
+		fmt.Println("find user error: ", err)
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	err = models.UpdateStat(repo.DB, user.Id, &req.UserStat)
+	if err != nil {
+		fmt.Println("update stat error : ", err)
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"ok": "true",
+	})
+}
+
+func (repo *UserRepo) UpdateProperty(c *gin.Context) {
+	req := &models.ReqUpdateProperty{}
+	err := c.Bind(req)
+	if err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	user, err := models.FindUser(repo.DB, req.Name)
+	if err == gorm.ErrRecordNotFound {
+		c.JSON(http.StatusOK, gin.H{
+			"ok":      "false",
+			"message": "not found user",
+		})
+		return
+	}
+
+	if err != nil {
+		fmt.Println("find user error: ", err)
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	err = models.UpdateProperty(repo.DB, user.Id, &req.UserProperty)
+	if err != nil {
+		fmt.Println("update property error : ", err)
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"ok": "true",
+	})
+}
+
+func (repo *UserRepo) DeleteUser(c *gin.Context) {
+	req := &models.ReqSearchName{}
+	err := c.Bind(req)
+	if err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	user, err := models.FindUser(repo.DB, req.Name)
+	if err == gorm.ErrRecordNotFound {
+		c.JSON(http.StatusOK, gin.H{
+			"ok":      "false",
+			"message": "not found user",
+		})
+		return
+	}
+
+	if err != nil {
+		fmt.Println("find user error: ", err)
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	err = models.DeleteUser(repo.DB, user.Id)
+	if err != nil {
+		fmt.Println("delete user error : ", err)
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"ok": "true",
 	})
 }
